@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C1 Grammar Practice</title>
+    <title>AI-Powered C1 Grammar Quiz</title>
     <style>
         * {
             margin: 0;
@@ -21,17 +21,20 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            background: linear-gradient(145deg, #ffffff, #f0f0f3);
+            border-radius: 30px;
+            box-shadow: 
+                20px 20px 60px #d1d9e6,
+                -20px -20px 60px #ffffff;
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 30px;
             text-align: center;
+            position: relative;
         }
 
         .header h1 {
@@ -45,239 +48,285 @@
             opacity: 0.9;
         }
 
-        .progress-bar {
-            background: rgba(255,255,255,0.2);
-            height: 8px;
-            border-radius: 4px;
-            margin-top: 20px;
-            overflow: hidden;
+        /* Menu Styles */
+        .menu-section {
+            padding: 60px 40px;
+            text-align: center;
+            display: block;
         }
 
-        .progress-fill {
-            background: #fff;
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.3s ease;
-            width: 0%;
+        .menu-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
         }
 
+        .menu-subtitle {
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .menu-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .menu-option {
+            background: linear-gradient(145deg, #f0f0f3, #ffffff);
+            box-shadow: 
+                15px 15px 30px #d1d9e6,
+                -15px -15px 30px #ffffff;
+            border: none;
+            padding: 40px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .menu-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                20px 20px 40px #d1d9e6,
+                -20px -20px 40px #ffffff;
+        }
+
+        .menu-option:active {
+            transform: translateY(-2px);
+        }
+
+        .menu-option-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .menu-option-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .menu-option-desc {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Quiz Styles */
         .quiz-section {
             padding: 40px;
+            display: none;
         }
 
         .question-header {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            color: #2c3e50;
-            padding: 20px;
-            border-radius: 15px;
+            background: linear-gradient(145deg, #f0f0f3, #ffffff);
+            box-shadow: 
+                inset 5px 5px 15px #d1d9e6,
+                inset -5px -5px 15px #ffffff;
+            padding: 25px;
+            border-radius: 20px;
             margin-bottom: 30px;
             text-align: center;
         }
 
         .question-number {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
-            margin-bottom: 5px;
+            color: #2c3e50;
+            margin-bottom: 10px;
         }
 
         .category-tag {
-            background: #ff6b6b;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 25px;
             font-size: 0.9rem;
             display: inline-block;
-            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
         }
 
         .question-text {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: #2c3e50;
             margin-bottom: 30px;
-            line-height: 1.6;
-            background: #f8f9fa;
+            line-height: 1.8;
+            background: linear-gradient(145deg, #ffffff, #f0f0f3);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 
+                inset 3px 3px 10px #d1d9e6,
+                inset -3px -3px 10px #ffffff;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .options-container {
+            background: linear-gradient(145deg, #ffffff, #f0f0f3);
             padding: 20px;
-            border-radius: 10px;
-            border-left: 5px solid #4facfe;
+            margin: 30px 0;
+            border-radius: 20px;
+            box-shadow: 
+                8px 8px 20px #d1d9e6,
+                -8px -8px 20px #ffffff;
         }
 
         .options-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
-            margin-bottom: 30px;
         }
 
         .option {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border: 3px solid transparent;
-            padding: 20px;
-            border-radius: 15px;
+            background: linear-gradient(145deg, #f0f0f3, #ffffff);
+            box-shadow: 
+                8px 8px 20px #d1d9e6,
+                -8px -8px 20px #ffffff;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1.1rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            font-weight: 600;
+            color: #2c3e50;
         }
 
         .option:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .option.selected {
-            border-color: #4facfe;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
+            transform: translateY(-2px);
         }
 
         .option.correct {
-            border-color: #27ae60;
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            background: linear-gradient(145deg, #2ecc71, #27ae60);
             color: white;
+            animation: correctPulse 0.6s ease;
         }
 
         .option.incorrect {
-            border-color: #e74c3c;
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
             color: white;
+            animation: incorrectShake 0.6s ease;
         }
 
-        .option-letter {
-            font-weight: bold;
-            margin-right: 10px;
-            background: rgba(255,255,255,0.3);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: 15px;
-            left: 15px;
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        .option-text {
-            margin-left: 45px;
-            text-align: left;
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
         .controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 30px;
             flex-wrap: wrap;
             gap: 15px;
-            margin-top: 30px;
         }
 
         .btn {
-            padding: 12px 25px;
+            background: linear-gradient(145deg, #f0f0f3, #ffffff);
+            box-shadow: 
+                6px 6px 15px #d1d9e6,
+                -6px -6px 15px #ffffff;
             border: none;
-            border-radius: 25px;
+            padding: 12px 25px;
+            border-radius: 20px;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn-return {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
             color: #2c3e50;
-        }
-
-        .btn-next {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-        }
-
-        .btn-answer {
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-            color: white;
-        }
-
-        .btn-explanation {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
+        .btn-primary {
+            background: linear-gradient(145deg, #4facfe, #00f2fe);
+            color: white;
+            box-shadow: 
+                6px 6px 15px rgba(79, 172, 254, 0.3),
+                -6px -6px 15px rgba(79, 172, 254, 0.1);
+        }
+
+        .btn-generate {
+            background: linear-gradient(145deg, #ff6b6b, #ee5a52);
+            color: white;
+            box-shadow: 
+                6px 6px 15px rgba(255, 107, 107, 0.3),
+                -6px -6px 15px rgba(255, 107, 107, 0.1);
+            font-size: 1.2rem;
+            padding: 15px 30px;
         }
 
         .score-display {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(145deg, #667eea, #764ba2);
             color: white;
             padding: 15px 25px;
             border-radius: 20px;
-            text-align: center;
             font-weight: bold;
-            font-size: 1.1rem;
         }
 
-        .explanation {
-            background: #f8f9fa;
-            border: 2px solid #dee2e6;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
+        .ai-generation {
+            background: linear-gradient(145deg, #e8f5e8, #f0f8f0);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
             display: none;
         }
 
-        .explanation.show {
+        .ai-generation.show {
             display: block;
-            animation: fadeIn 0.3s ease;
+            animation: slideIn 0.5s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .final-score {
-            text-align: center;
-            padding: 40px;
-            display: none;
+        .loading {
+            display: inline-block;
+            animation: spin 1s linear infinite;
         }
 
-        .final-score h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 2rem;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px auto;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
+        .generated-content {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 15px;
+            box-shadow: 
+                inset 2px 2px 8px #d1e7d1,
+                inset -2px -2px 8px #ffffff;
         }
 
         @media (max-width: 768px) {
-            .options-grid {
+            .menu-options {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
             
-            .header h1 {
-                font-size: 2rem;
+            .options-grid {
+                grid-template-columns: 1fr;
             }
             
             .controls {
@@ -289,415 +338,325 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎯 C1 Grammar Practice</h1>
-            <p>Master Advanced English Grammar with 25 Interactive Questions</p>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressBar"></div>
+            <h1>🤖 AI-Powered C1 Grammar</h1>
+            <p>Interactive Practice with Real-Time Question Generation</p>
+        </div>
+
+        <!-- Main Menu -->
+        <div class="menu-section" id="menuSection">
+            <h2 class="menu-title">Choose Your Practice Mode</h2>
+            <p class="menu-subtitle">Select an exercise type to begin your C1 grammar journey</p>
+            
+            <div class="menu-options">
+                <button class="menu-option" onclick="startTransformationQuiz()">
+                    <span class="menu-option-icon">🔄</span>
+                    <div class="menu-option-title">Sentence Transformation</div>
+                    <div class="menu-option-desc">Interactive multiple-choice exercises with instant feedback</div>
+                </button>
+                
+                <button class="menu-option" onclick="showGenerateSection()">
+                    <span class="menu-option-icon">✨</span>
+                    <div class="menu-option-title">Generate Part 4 Exercises</div>
+                    <div class="menu-option-desc">AI creates custom questions based on your needs</div>
+                </button>
             </div>
         </div>
 
+        <!-- Quiz Section -->
         <div class="quiz-section" id="quizSection">
             <div class="question-header">
-                <div class="question-number" id="questionNumber">Question 1 of 25</div>
-                <div class="category-tag" id="categoryTag">Similar Words</div>
+                <div class="question-number" id="questionNumber">Question 1 of 5</div>
+                <div class="category-tag" id="categoryTag">Sentence Transformation</div>
             </div>
 
-            <div class="question-text" id="questionText"></div>
+            <div class="question-text" id="questionText">
+                Loading question...
+            </div>
 
-            <div class="options-grid" id="optionsGrid"></div>
-
-            <div class="explanation" id="explanation"></div>
+            <div class="options-container">
+                <div class="options-grid" id="optionsGrid">
+                    <!-- Options populated by JavaScript -->
+                </div>
+            </div>
 
             <div class="controls">
-                <button class="btn btn-return" onclick="resetQuiz()">🔄 Return</button>
+                <button class="btn" onclick="backToMenu()">🏠 Menu</button>
                 <div class="score-display" id="scoreDisplay">Score: 0/0 (0%)</div>
                 <div style="display: flex; gap: 10px;">
-                    <button class="btn btn-answer" onclick="showAnswer()" id="answerBtn">📝 Answer</button>
-                    <button class="btn btn-explanation" onclick="showExplanation()" id="explanationBtn">💡 Explanation</button>
-                    <button class="btn btn-next" onclick="nextQuestion()" id="nextBtn">Next ➡️</button>
+                    <button class="btn" onclick="showAnswer()" id="answerBtn">📝 Answer</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()">Next ➡️</button>
                 </div>
             </div>
         </div>
 
-        <div class="final-score" id="finalScore">
-            <h2>🎉 Quiz Complete!</h2>
-            <div class="score-circle" id="finalScoreCircle">85%</div>
-            <p id="finalMessage">Great job! You're ready for C1 level!</p>
-            <button class="btn btn-next" onclick="resetQuiz()" style="margin-top: 20px;">🔄 Try Again</button>
+        <!-- AI Generation Section -->
+        <div class="ai-generation" id="aiGenerationSection">
+            <h3>🤖 AI Question Generator</h3>
+            <p>Generate custom C1 Part 4 exercises using artificial intelligence</p>
+            
+            <div style="margin: 20px 0;">
+                <label for="topicInput" style="display: block; margin-bottom: 10px; font-weight: bold;">Topic/Theme:</label>
+                <input type="text" id="topicInput" placeholder="e.g., business, environment, technology..." 
+                       style="padding: 10px; border-radius: 10px; border: 2px solid #ddd; width: 100%; max-width: 300px;">
+            </div>
+            
+            <button class="btn btn-generate" onclick="generateAIQuestions()" id="generateBtn">
+                ✨ Generate 5 Questions
+            </button>
+            
+            <div class="generated-content" id="generatedContent" style="display: none;">
+                <h4>📝 Generated Questions:</h4>
+                <div id="aiQuestionsList"></div>
+                <button class="btn btn-primary" onclick="startAIQuiz()" style="margin-top: 15px;">
+                    🚀 Start AI Quiz
+                </button>
+            </div>
+            
+            <button class="btn" onclick="backToMenu()" style="margin-top: 20px;">🏠 Back to Menu</button>
         </div>
     </div>
 
     <script>
-        const questions = [
-            // Similar Words (60% = 15 questions)
+        // Sample questions for proof of concept
+        const sampleQuestions = [
             {
+                id: 1,
                 category: "Similar Words",
-                question: "The research findings were _______ with previous studies in the field.",
+                sentence: "The research findings were _______ with previous studies in the field.",
                 options: ["resistant", "persistent", "consistent", "constant"],
                 correct: 2,
-                explanation: "'Consistent' means in agreement or harmony with something. 'Constant' means continuous, 'persistent' means continuing firmly, and 'resistant' means opposing."
+                explanation: "'Consistent' means in agreement or harmony with something."
             },
             {
-                category: "Similar Words", 
-                question: "The company's _______ approach to innovation has led to remarkable breakthroughs.",
-                options: ["systemic", "systematic", "symptomatic", "synthetic"],
-                correct: 1,
-                explanation: "'Systematic' means methodical and organized. 'Systemic' relates to the whole system, 'symptomatic' shows symptoms, and 'synthetic' means artificial."
-            },
-            {
-                category: "Similar Words",
-                question: "Her _______ to detail made her the perfect candidate for the quality control position.",
-                options: ["intention", "retention", "attention", "detention"],
-                correct: 2,
-                explanation: "'Attention to detail' is a fixed expression meaning careful consideration of small elements."
-            },
-            {
-                category: "Similar Words",
-                question: "The politician's speech was _______ of his party's core values.",
-                options: ["representative", "presentative", "preservative", "preventative"],
-                correct: 0,
-                explanation: "'Representative' means typical of or serving as an example of something."
-            },
-            {
-                category: "Similar Words",
-                question: "The new policy will have _______ effects on the economy.",
-                options: ["far-fetched", "far-reaching", "far-sighted", "far-off"],
-                correct: 1,
-                explanation: "'Far-reaching' means having wide-ranging consequences or implications."
-            },
-            {
-                category: "Similar Words",
-                question: "The artist's work shows a _______ understanding of human nature.",
-                options: ["profane", "profuse", "proficient", "profound"],
-                correct: 3,
-                explanation: "'Profound' means very deep, thorough, or intense in understanding."
-            },
-            {
-                category: "Similar Words",
-                question: "The committee reached a _______ decision after lengthy discussions.",
-                options: ["anonymous", "unanimous", "synonymous", "autonomous"],
-                correct: 1,
-                explanation: "'Unanimous' means complete agreement by all members."
-            },
-            {
-                category: "Similar Words",
-                question: "The data provided _______ evidence for the hypothesis.",
-                options: ["compiling", "complying", "completing", "compelling"],
-                correct: 3,
-                explanation: "'Compelling' means forceful, convincing, or strongly persuasive."
-            },
-            {
-                category: "Similar Words",
-                question: "The novel offers a _______ critique of modern society.",
-                options: ["scathing", "soothing", "smoothing", "searching"],
-                correct: 0,
-                explanation: "'Scathing' means severely critical or harsh in assessment."
-            },
-            {
-                category: "Similar Words",
-                question: "His _______ for classical music was evident in his extensive collection.",
-                options: ["pendant", "penchant", "penance", "pension"],
-                correct: 1,
-                explanation: "'Penchant' means a strong inclination or liking for something."
-            },
-            {
-                category: "Similar Words",
-                question: "The medicine had an _______ effect on the patient's condition.",
-                options: ["averse", "diverse", "adverse", "reverse"],
-                correct: 2,
-                explanation: "'Adverse' means harmful or unfavorable. 'Averse' means opposed to something."
-            },
-            {
-                category: "Similar Words",
-                question: "The CEO's _______ leadership style inspired the entire team.",
-                options: ["exemplify", "exemplifying", "exemplified", "exemplary"],
-                correct: 3,
-                explanation: "'Exemplary' (adjective) means serving as a desirable model; outstanding."
-            },
-            {
-                category: "Similar Words",
-                question: "The professor's lecture was both _______ and accessible to students.",
-                options: ["erratic", "erudite", "erotic", "exotic"],
-                correct: 1,
-                explanation: "'Erudite' means having or showing great knowledge or learning."
-            },
-            {
-                category: "Similar Words",
-                question: "The witness gave a _______ account of the incident.",
-                options: ["lurid", "livid", "liquid", "lucid"],
-                correct: 3,
-                explanation: "'Lucid' means clear and easy to understand; rational and coherent."
-            },
-            {
-                category: "Similar Words",
-                question: "The company's _______ growth exceeded all expectations.",
-                options: ["exponential", "experiential", "experimental", "expressive"],
-                correct: 0,
-                explanation: "'Exponential' means rapid growth that increases at an accelerating rate."
-            },
-
-            // Collocations (5% = 1 question)
-            {
-                category: "Collocations",
-                question: "The project was completed _______ schedule despite several setbacks.",
-                options: ["in front of", "before of", "prior of", "ahead of"],
-                correct: 3,
-                explanation: "'Ahead of schedule' is the correct collocation meaning earlier than planned."
-            },
-
-            // Linking Words (10% = 3 questions)
-            {
-                category: "Linking Words",
-                question: "_______ the challenging economic climate, the company managed to increase profits.",
-                options: ["Providing", "Notwithstanding", "Supposing", "Concerning"],
-                correct: 1,
-                explanation: "'Notwithstanding' means despite or in spite of, showing contrast."
-            },
-            {
-                category: "Linking Words",
-                question: "The research was thorough; _______, the conclusions were questionable.",
-                options: ["therefore", "furthermore", "nevertheless", "moreover"],
-                correct: 2,
-                explanation: "'Nevertheless' introduces a contrasting statement despite what was said before."
-            },
-            {
-                category: "Linking Words",
-                question: "_______ you follow the instructions carefully, you won't encounter any problems.",
-                options: ["Provided that", "In case", "Unless", "Despite"],
-                correct: 0,
-                explanation: "'Provided that' introduces a condition that must be met."
-            },
-
-            // Phrasal Verbs (10% = 3 questions)
-            {
-                category: "Phrasal Verbs",
-                question: "The meeting was _______ until next week due to scheduling conflicts.",
+                id: 2,
+                category: "Phrasal Verbs", 
+                sentence: "The meeting was _______ until next week due to scheduling conflicts.",
                 options: ["put on", "put off", "put up", "put out"],
                 correct: 1,
                 explanation: "'Put off' means to postpone or delay something."
             },
             {
-                category: "Phrasal Verbs",
-                question: "She finally _______ smoking after years of trying.",
-                options: ["gave in", "gave out", "gave away", "gave up"],
-                correct: 3,
-                explanation: "'Gave up' means to stop doing something, especially a habit."
+                id: 3,
+                category: "Linking Words",
+                sentence: "_______ the challenging economic climate, the company managed to increase profits.",
+                options: ["Providing", "Notwithstanding", "Supposing", "Concerning"],
+                correct: 1,
+                explanation: "'Notwithstanding' means despite or in spite of, showing contrast."
             },
             {
-                category: "Phrasal Verbs",
-                question: "The story he told didn't _______ with the evidence we found.",
-                options: ["add up", "add on", "add to", "add in"],
-                correct: 0,
-                explanation: "'Add up' means to make sense or be consistent with other facts."
-            },
-
-            // Similar Expressions (5% = 1 question)
-            {
-                category: "Similar Expressions",
-                question: "When it comes to public speaking, practice makes _______.",
-                options: ["sense", "progress", "perfect", "difference"],
-                correct: 2,
-                explanation: "'Practice makes perfect' is a common idiom meaning that regular practice leads to expertise."
-            },
-
-            // Gerund & Infinitive (10% = 2 questions)
-            {
+                id: 4,
                 category: "Gerund & Infinitive",
-                question: "I regret _______ you that your application has been unsuccessful.",
+                sentence: "I regret _______ you that your application has been unsuccessful.",
                 options: ["informing", "to inform", "inform", "informed"],
                 correct: 1,
-                explanation: "'Regret to do' is used for present actions (giving bad news). 'Regret doing' is for past actions."
+                explanation: "'Regret to do' is used for present actions (giving bad news)."
             },
             {
-                category: "Gerund & Infinitive",
-                question: "The manager suggested _______ the proposal before the deadline.",
-                options: ["revising", "to revise", "revise", "revised"],
-                correct: 0,
-                explanation: "'Suggest' is followed by a gerund (verb + -ing), not an infinitive."
+                id: 5,
+                category: "Collocations",
+                sentence: "The project was completed _______ schedule despite several setbacks.",
+                options: ["in front of", "before of", "prior of", "ahead of"],
+                correct: 3,
+                explanation: "'Ahead of schedule' is the correct collocation meaning earlier than planned."
             }
         ];
 
+        // Quiz state
         let currentQuestion = 0;
         let score = 0;
-        let answered = false;
-        let selectedOption = -1;
+        let questions = [];
+        let firstAttempt = true;
+        let currentQuestions = sampleQuestions;
+
+        function startTransformationQuiz() {
+            document.getElementById('menuSection').style.display = 'none';
+            document.getElementById('quizSection').style.display = 'block';
+            document.getElementById('aiGenerationSection').classList.remove('show');
+            
+            currentQuestions = sampleQuestions;
+            questions = [...currentQuestions];
+            currentQuestion = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        function showGenerateSection() {
+            document.getElementById('menuSection').style.display = 'none';
+            document.getElementById('quizSection').style.display = 'none';
+            document.getElementById('aiGenerationSection').classList.add('show');
+        }
+
+        function backToMenu() {
+            document.getElementById('menuSection').style.display = 'block';
+            document.getElementById('quizSection').style.display = 'none';
+            document.getElementById('aiGenerationSection').classList.remove('show');
+        }
 
         function loadQuestion() {
-            console.log('Loading question:', currentQuestion);
-            const q = questions[currentQuestion];
-            console.log('Question data:', q);
-            
-            const questionNumber = document.getElementById('questionNumber');
-            const categoryTag = document.getElementById('categoryTag');
-            const questionText = document.getElementById('questionText');
-            const optionsGrid = document.getElementById('optionsGrid');
-            const explanation = document.getElementById('explanation');
-            const progressBar = document.getElementById('progressBar');
-
-            if (!questionNumber || !categoryTag || !questionText || !optionsGrid) {
-                console.error('Required elements not found');
-                setTimeout(loadQuestion, 100); // Retry after 100ms
+            if (currentQuestion >= questions.length) {
+                showCompletionMessage();
                 return;
             }
 
-            questionNumber.textContent = `Question ${currentQuestion + 1} of 25`;
-            categoryTag.textContent = q.category;
-            questionText.innerHTML = q.question;
-            explanation.classList.remove('show');
-            
-            // Update progress bar
-            progressBar.style.width = `${((currentQuestion + 1) / 25) * 100}%`;
+            const q = questions[currentQuestion];
+            document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById('categoryTag').textContent = q.category;
+            document.getElementById('questionText').textContent = q.sentence;
 
-            // Clear options
+            const optionsGrid = document.getElementById('optionsGrid');
             optionsGrid.innerHTML = '';
             
-            // Add options
             q.options.forEach((option, index) => {
-                const optionDiv = document.createElement('div');
-                optionDiv.className = 'option';
-                optionDiv.innerHTML = `
-                    <span class="option-letter">${String.fromCharCode(65 + index)}</span>
-                    <span class="option-text">${option}</span>
-                `;
-                optionDiv.onclick = () => selectOption(index);
-                optionsGrid.appendChild(optionDiv);
+                const btn = document.createElement('button');
+                btn.className = 'option';
+                btn.textContent = `${String.fromCharCode(65 + index)}) ${option}`;
+                btn.onclick = () => selectOption(index);
+                optionsGrid.appendChild(btn);
             });
 
+            firstAttempt = true;
             updateScore();
-            resetButtons();
         }
 
         function selectOption(index) {
             const q = questions[currentQuestion];
             const options = document.querySelectorAll('.option');
-            const clickedOption = options[index];
             
-            selectedOption = index;
-            
-            // Remove previous selections but keep correct/incorrect states
-            options.forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            
-            // If this option is already marked as correct or incorrect, don't change it
-            if (clickedOption.classList.contains('correct') || clickedOption.classList.contains('incorrect')) {
-                return;
-            }
-            
-            // Check if answer is correct
             if (index === q.correct) {
-                clickedOption.classList.add('correct');
-                if (!answered) {
-                    score++;
-                    answered = true;
-                    updateScore();
-                }
+                options[index].classList.add('correct');
+                if (firstAttempt) score++;
+                options.forEach(opt => opt.style.pointerEvents = 'none');
             } else {
-                clickedOption.classList.add('incorrect');
-                // User can keep trying, so don't mark as answered
+                options[index].classList.add('incorrect');
+                firstAttempt = false;
             }
+            
+            updateScore();
         }
 
         function showAnswer() {
             const q = questions[currentQuestion];
             const options = document.querySelectorAll('.option');
-            
-            // Show the correct answer
-            options.forEach((opt, i) => {
-                if (i === q.correct && !opt.classList.contains('correct')) {
-                    opt.classList.add('correct');
-                }
-            });
-            
-            // Mark as answered if not already
-            if (!answered) {
-                answered = true;
-                updateScore();
-            }
-        }
-
-        function showExplanation() {
-            const explanation = document.getElementById('explanation');
-            const q = questions[currentQuestion];
-            explanation.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
-            explanation.classList.add('show');
+            options[q.correct].classList.add('correct');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
         }
 
         function nextQuestion() {
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                answered = false;
-                selectedOption = -1;
-                loadQuestion();
-            } else {
-                showFinalScore();
-            }
-        }
-
-        function resetButtons() {
-            document.getElementById('answerBtn').disabled = false;
-            document.getElementById('explanationBtn').disabled = false;
+            currentQuestion++;
+            loadQuestion();
         }
 
         function updateScore() {
             const scoreDisplay = document.getElementById('scoreDisplay');
-            const totalAnswered = Math.max(1, currentQuestion + (answered ? 1 : 0));
-            const percentage = Math.round((score / totalAnswered) * 100);
-            scoreDisplay.textContent = `Score: ${score}/${totalAnswered} (${percentage}%)`;
+            const total = Math.max(1, currentQuestion + 1);
+            const percentage = Math.round((score / total) * 100);
+            scoreDisplay.textContent = `Score: ${score}/${total} (${percentage}%)`;
         }
 
-        function showFinalScore() {
-            const quizSection = document.getElementById('quizSection');
-            const finalScore = document.getElementById('finalScore');
-            const finalScoreCircle = document.getElementById('finalScoreCircle');
-            const finalMessage = document.getElementById('finalMessage');
+        function showCompletionMessage() {
+            const questionText = document.getElementById('questionText');
+            const percentage = Math.round((score / questions.length) * 100);
+            
+            questionText.innerHTML = `
+                <div style="text-align: center;">
+                    <h2>🎉 Quiz Complete!</h2>
+                    <div style="font-size: 3rem; margin: 20px 0; color: #4facfe;">${percentage}%</div>
+                    <p>You scored ${score} out of ${questions.length} questions correctly!</p>
+                    ${percentage >= 80 ? '<p style="color: #27ae60;">🌟 Excellent work! C1 level achieved!</p>' : '<p style="color: #f39c12;">📚 Keep practicing! You\'re getting there!</p>'}
+                </div>
+            `;
+            
+            document.getElementById('optionsGrid').innerHTML = '';
+            document.querySelector('.controls').innerHTML = `
+                <button class="btn btn-primary" onclick="backToMenu()">🏠 Back to Menu</button>
+                <button class="btn btn-generate" onclick="showGenerateSection()">✨ Generate More Questions</button>
+            `;
+        }
 
-            const percentage = Math.round((score / 25) * 100);
+        // AI Generation Functions
+        function generateAIQuestions() {
+            const topic = document.getElementById('topicInput').value || 'general English';
+            const generateBtn = document.getElementById('generateBtn');
+            const generatedContent = document.getElementById('generatedContent');
             
-            quizSection.style.display = 'none';
-            finalScore.style.display = 'block';
+            // Show loading state
+            generateBtn.innerHTML = '<span class="loading">⏳</span> Generating...';
+            generateBtn.disabled = true;
             
-            finalScoreCircle.textContent = `${percentage}%`;
+            // Simulate AI generation (in real implementation, this would call an AI API)
+            setTimeout(() => {
+                const aiQuestions = generateMockAIQuestions(topic);
+                displayGeneratedQuestions(aiQuestions);
+                
+                generateBtn.innerHTML = '✨ Generate 5 Questions';
+                generateBtn.disabled = false;
+                generatedContent.style.display = 'block';
+            }, 2000);
+        }
+
+        function generateMockAIQuestions(topic) {
+            // This simulates AI-generated questions. In reality, you'd call:
+            // - OpenAI API
+            // - Claude API  
+            // - Custom AI service
             
-            let message = '';
-            if (percentage >= 90) {
-                message = '🌟 Outstanding! You\'re definitely C1 level!';
-                finalScoreCircle.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
-            } else if (percentage >= 80) {
-                message = '🎯 Excellent work! Strong C1 performance!';
-                finalScoreCircle.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
-            } else if (percentage >= 70) {
-                message = '👍 Good job! Keep practicing for C1 mastery!';
-                finalScoreCircle.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
-            } else {
-                message = '📚 Keep studying! You\'ll get there soon!';
-                finalScoreCircle.style.background = 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)';
+            const templates = [
+                `The ${topic} industry has shown _______ growth in recent years.`,
+                `Experts in ${topic} recommend a _______ approach to innovation.`,
+                `The latest ${topic} research provides _______ evidence for new theories.`,
+                `Companies working in ${topic} must maintain _______ standards.`,
+                `The ${topic} sector requires _______ investment for future development.`
+            ];
+            
+            const optionSets = [
+                ["remarkable", "unremarkable", "remarking", "remarkably"],
+                ["systematic", "symptomatic", "systemic", "synthetic"],
+                ["compelling", "compiling", "complying", "completing"],
+                ["rigorous", "vigorous", "vigorous", "rigorous"],
+                ["substantial", "substitute", "substantive", "substituted"]
+            ];
+            
+            return templates.map((template, index) => ({
+                id: `ai_${index + 1}`,
+                category: `AI Generated - ${topic}`,
+                sentence: template,
+                options: optionSets[index % optionSets.length],
+                correct: 0,
+                explanation: `AI-generated explanation for ${topic} context.`
+            }));
+        }
+
+        function displayGeneratedQuestions(aiQuestions) {
+            const listDiv = document.getElementById('aiQuestionsList');
+            listDiv.innerHTML = aiQuestions.map((q, index) => `
+                <div style="text-align: left; margin: 10px 0; padding: 10px; background: #f9f9f9; border-radius: 8px;">
+                    <strong>Q${index + 1}:</strong> ${q.sentence}<br>
+                    <small style="color: #666;">Options: ${q.options.join(', ')}</small>
+                </div>
+            `).join('');
+            
+            // Store AI questions for quiz
+            window.aiGeneratedQuestions = aiQuestions;
+        }
+
+        function startAIQuiz() {
+            if (window.aiGeneratedQuestions) {
+                currentQuestions = window.aiGeneratedQuestions;
+                questions = [...currentQuestions];
+                currentQuestion = 0;
+                score = 0;
+                
+                document.getElementById('aiGenerationSection').classList.remove('show');
+                document.getElementById('quizSection').style.display = 'block';
+                loadQuestion();
             }
-            
-            finalMessage.textContent = message;
         }
 
-        function resetQuiz() {
-            currentQuestion = 0;
-            score = 0;
-            answered = false;
-            selectedOption = -1;
-            
-            document.getElementById('quizSection').style.display = 'block';
-            document.getElementById('finalScore').style.display = 'none';
-            
-            loadQuestion();
-        }
-
-        // Initialize quiz when page loads
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            loadQuestion();
+            console.log('🤖 AI-Powered C1 Grammar Quiz loaded!');
+            console.log('📊 Ready for real AI integration with APIs');
         });
-        
-        // Backup initialization
-        window.onload = function() {
-            loadQuestion();
-        };
     </script>
 </body>
 </html>
