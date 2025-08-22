@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -523,7 +523,10 @@
         let selectedOption = -1;
 
         function loadQuestion() {
+            console.log('Loading question:', currentQuestion);
             const q = questions[currentQuestion];
+            console.log('Question data:', q);
+            
             const questionNumber = document.getElementById('questionNumber');
             const categoryTag = document.getElementById('categoryTag');
             const questionText = document.getElementById('questionText');
@@ -531,9 +534,15 @@
             const explanation = document.getElementById('explanation');
             const progressBar = document.getElementById('progressBar');
 
+            if (!questionNumber || !categoryTag || !questionText || !optionsGrid) {
+                console.error('Required elements not found');
+                setTimeout(loadQuestion, 100); // Retry after 100ms
+                return;
+            }
+
             questionNumber.textContent = `Question ${currentQuestion + 1} of 25`;
             categoryTag.textContent = q.category;
-            questionText.textContent = q.question;
+            questionText.innerHTML = q.question;
             explanation.classList.remove('show');
             
             // Update progress bar
@@ -559,43 +568,52 @@
         }
 
         function selectOption(index) {
-            if (answered) return;
-
-            selectedOption = index;
+            const q = questions[currentQuestion];
             const options = document.querySelectorAll('.option');
-            options.forEach((opt, i) => {
+            const clickedOption = options[index];
+            
+            selectedOption = index;
+            
+            // Remove previous selections but keep correct/incorrect states
+            options.forEach(opt => {
                 opt.classList.remove('selected');
-                if (i === index) {
-                    opt.classList.add('selected');
-                }
             });
+            
+            // If this option is already marked as correct or incorrect, don't change it
+            if (clickedOption.classList.contains('correct') || clickedOption.classList.contains('incorrect')) {
+                return;
+            }
+            
+            // Check if answer is correct
+            if (index === q.correct) {
+                clickedOption.classList.add('correct');
+                if (!answered) {
+                    score++;
+                    answered = true;
+                    updateScore();
+                }
+            } else {
+                clickedOption.classList.add('incorrect');
+                // User can keep trying, so don't mark as answered
+            }
         }
 
         function showAnswer() {
-            if (selectedOption === -1) {
-                alert('Please select an option first!');
-                return;
-            }
-
-            answered = true;
             const q = questions[currentQuestion];
             const options = document.querySelectorAll('.option');
             
+            // Show the correct answer
             options.forEach((opt, i) => {
-                opt.style.pointerEvents = 'none';
-                if (i === q.correct) {
+                if (i === q.correct && !opt.classList.contains('correct')) {
                     opt.classList.add('correct');
-                } else if (i === selectedOption && i !== q.correct) {
-                    opt.classList.add('incorrect');
                 }
             });
-
-            if (selectedOption === q.correct) {
-                score++;
+            
+            // Mark as answered if not already
+            if (!answered) {
+                answered = true;
+                updateScore();
             }
-
-            updateScore();
-            document.getElementById('answerBtn').disabled = true;
         }
 
         function showExplanation() {
@@ -606,11 +624,6 @@
         }
 
         function nextQuestion() {
-            if (!answered) {
-                alert('Please answer the question first!');
-                return;
-            }
-
             if (currentQuestion < questions.length - 1) {
                 currentQuestion++;
                 answered = false;
@@ -628,8 +641,9 @@
 
         function updateScore() {
             const scoreDisplay = document.getElementById('scoreDisplay');
-            const percentage = currentQuestion === 0 && score === 0 ? 0 : Math.round((score / (currentQuestion + (answered ? 1 : 0))) * 100);
-            scoreDisplay.textContent = `Score: ${score}/${answered ? currentQuestion + 1 : currentQuestion} (${percentage}%)`;
+            const totalAnswered = Math.max(1, currentQuestion + (answered ? 1 : 0));
+            const percentage = Math.round((score / totalAnswered) * 100);
+            scoreDisplay.textContent = `Score: ${score}/${totalAnswered} (${percentage}%)`;
         }
 
         function showFinalScore() {
@@ -674,3 +688,16 @@
             
             loadQuestion();
         }
+
+        // Initialize quiz when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadQuestion();
+        });
+        
+        // Backup initialization
+        window.onload = function() {
+            loadQuestion();
+        };
+    </script>
+</body>
+</html>
