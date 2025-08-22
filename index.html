@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C1 Grammar Practice - 90 Interactive Sentences</title>
+    <title>C1 Grammar Practice</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
@@ -30,217 +30,258 @@
         .header {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
-            text-align: center;
             padding: 30px;
+            text-align: center;
         }
 
         .header h1 {
-            font-size: 2.5em;
+            font-size: 2.5rem;
             margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .header p {
-            font-size: 1.1em;
+            font-size: 1.1rem;
             opacity: 0.9;
         }
 
-        .progress-container {
-            background: #f8f9fa;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #e9ecef;
-        }
-
         .progress-bar {
-            width: 100%;
+            background: rgba(255,255,255,0.2);
             height: 8px;
-            background: #e9ecef;
             border-radius: 4px;
+            margin-top: 20px;
             overflow: hidden;
-            margin-bottom: 10px;
         }
 
         .progress-fill {
+            background: #fff;
             height: 100%;
-            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            border-radius: 4px;
             transition: width 0.3s ease;
-            width: 1.11%;
+            width: 0%;
         }
 
-        .category-title {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 30px;
-            font-size: 1.3em;
-            font-weight: bold;
-            margin: 20px 0;
-            border-radius: 10px;
+        .quiz-section {
+            padding: 40px;
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #2c3e50;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .question-container {
-            padding: 30px;
-            background: white;
-            margin-bottom: 10px;
         }
 
         .question-number {
-            color: #667eea;
+            font-size: 1.2rem;
             font-weight: bold;
-            font-size: 1.1em;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
 
-        .original-sentence {
+        .category-tag {
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            line-height: 1.6;
             background: #f8f9fa;
             padding: 20px;
             border-radius: 10px;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-            line-height: 1.6;
-            border-left: 4px solid #4facfe;
+            border-left: 5px solid #4facfe;
         }
 
-        .key-word {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            color: #333;
-            padding: 10px 20px;
-            border-radius: 25px;
-            display: inline-block;
-            margin: 15px 0;
-            font-weight: bold;
-            font-size: 1.2em;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
-        .transform-sentence {
-            background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
-            padding: 25px;
+        .option {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border: 3px solid transparent;
+            padding: 20px;
             border-radius: 15px;
-            margin: 20px 0;
-            font-size: 1.2em;
-            line-height: 1.8;
-            border: 2px solid #ffd54f;
-            box-shadow: 0 4px 15px rgba(255, 213, 79, 0.2);
-        }
-
-        .blank-space {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            padding: 8px 20px;
-            border-radius: 20px;
-            margin: 0 8px;
-            font-weight: bold;
-            color: #1976d2;
-            border: 2px solid #42a5f5;
-            display: inline-block;
-            min-width: 100px;
-            text-align: center;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
             cursor: pointer;
-            font-weight: bold;
             transition: all 0.3s ease;
-            font-size: 1em;
+            font-size: 1.1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .repeat-btn {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            color: #333;
+        .option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        .back-btn {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            color: #333;
-        }
-
-        .next-btn {
+        .option.selected {
+            border-color: #4facfe;
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
         }
 
-        .answer-btn {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            color: #333;
+        .option.correct {
+            border-color: #27ae60;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
         }
 
-        button:hover {
+        .option.incorrect {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+
+        .option-letter {
+            font-weight: bold;
+            margin-right: 10px;
+            background: rgba(255,255,255,0.3);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+        }
+
+        .option-text {
+            margin-left: 45px;
+            text-align: left;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-return {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #2c3e50;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-answer {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+        }
+
+        .btn-explanation {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        button:disabled {
-            opacity: 0.5;
+        .btn:disabled {
+            opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
 
-        .answer {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            padding: 15px;
+        .score-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .explanation {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
             border-radius: 10px;
-            margin-top: 15px;
+            padding: 20px;
+            margin-top: 20px;
             display: none;
         }
 
-        .answer.show {
+        .explanation.show {
             display: block;
-            animation: slideDown 0.3s ease;
+            animation: fadeIn 0.3s ease;
         }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .grammar-note {
-            background: #e7f3ff;
-            border-left: 4px solid #007bff;
-            padding: 10px 15px;
-            margin-top: 10px;
-            border-radius: 0 10px 10px 0;
-            font-style: italic;
+        .final-score {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .final-score h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
         }
 
         @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                border-radius: 10px;
+            .options-grid {
+                grid-template-columns: 1fr;
             }
             
             .header h1 {
-                font-size: 2em;
+                font-size: 2rem;
             }
             
-            .question-container {
-                padding: 20px;
-            }
-            
-            .buttons {
-                justify-content: center;
-            }
-            
-            button {
-                flex: 1;
-                min-width: 120px;
+            .controls {
+                flex-direction: column;
             }
         }
     </style>
@@ -248,859 +289,394 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>C1 Grammar Practice</h1>
-            <p>Master Advanced English Grammar with 90 Interactive Transformations</p>
-        </div>
-        
-        <div class="progress-container">
+            <h1>🎯 C1 Grammar Practice</h1>
+            <p>Master Advanced English Grammar with 25 Interactive Questions</p>
             <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
+                <div class="progress-fill" id="progressBar"></div>
             </div>
-            <p>Question <span id="currentQuestion">1</span> of 90</p>
         </div>
 
-        <div id="questionsContainer">
-            <!-- Questions will be dynamically loaded here -->
+        <div class="quiz-section" id="quizSection">
+            <div class="question-header">
+                <div class="question-number" id="questionNumber">Question 1 of 25</div>
+                <div class="category-tag" id="categoryTag">Similar Words</div>
+            </div>
+
+            <div class="question-text" id="questionText"></div>
+
+            <div class="options-grid" id="optionsGrid"></div>
+
+            <div class="explanation" id="explanation"></div>
+
+            <div class="controls">
+                <button class="btn btn-return" onclick="resetQuiz()">🔄 Return</button>
+                <div class="score-display" id="scoreDisplay">Score: 0/0 (0%)</div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-answer" onclick="showAnswer()" id="answerBtn">📝 Answer</button>
+                    <button class="btn btn-explanation" onclick="showExplanation()" id="explanationBtn">💡 Explanation</button>
+                    <button class="btn btn-next" onclick="nextQuestion()" id="nextBtn">Next ➡️</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="final-score" id="finalScore">
+            <h2>🎉 Quiz Complete!</h2>
+            <div class="score-circle" id="finalScoreCircle">85%</div>
+            <p id="finalMessage">Great job! You're ready for C1 level!</p>
+            <button class="btn btn-next" onclick="resetQuiz()" style="margin-top: 20px;">🔄 Try Again</button>
         </div>
     </div>
 
     <script>
         const questions = [
-            // Group 1: Passive Voice (Questions 1-10)
+            // Similar Words (60% = 15 questions)
             {
-                category: "Passive Voice",
-                original: "The company employed my mother for over twenty years.",
-                keyWord: "USED",
-                transform: "My mother _____ _____ _____ _____ by the company for over twenty years.",
-                answer: "used to be employed",
-                note: "Transform active to passive using 'used to' + be + past participle"
+                category: "Similar Words",
+                question: "The research findings were _______ with previous studies in the field.",
+                options: ["consistent", "constant", "persistent", "resistant"],
+                correct: 0,
+                explanation: "'Consistent' means in agreement or harmony with something. 'Constant' means continuous, 'persistent' means continuing firmly, and 'resistant' means opposing."
             },
             {
-                category: "Passive Voice",
-                original: "People believe that the treasure was buried here centuries ago.",
-                keyWord: "BELIEVED",
-                transform: "The treasure _____ _____ _____ _____ _____ here centuries ago.",
-                answer: "is believed to have been",
-                note: "Impersonal passive: It is believed that... → Subject + is believed to have..."
+                category: "Similar Words", 
+                question: "The company's _______ approach to innovation has led to remarkable breakthroughs.",
+                options: ["systematic", "systemic", "symptomatic", "synthetic"],
+                correct: 0,
+                explanation: "'Systematic' means methodical and organized. 'Systemic' relates to the whole system, 'symptomatic' shows symptoms, and 'synthetic' means artificial."
             },
             {
-                category: "Passive Voice",
-                original: "They are going to demolish the old theatre next month.",
-                keyWord: "DEMOLISHED",
-                transform: "The old theatre _____ _____ _____ next month.",
-                answer: "is going to be",
-                note: "Future passive with 'going to'"
+                category: "Similar Words",
+                question: "Her _______ to detail made her the perfect candidate for the quality control position.",
+                options: ["attention", "intention", "retention", "detention"],
+                correct: 0,
+                explanation: "'Attention to detail' is a fixed expression meaning careful consideration of small elements."
             },
             {
-                category: "Passive Voice",
-                original: "Someone should have warned us about the dangers.",
-                keyWord: "BEEN",
-                transform: "We should _____ _____ _____ about the dangers.",
-                answer: "have been warned",
-                note: "Modal perfect passive: should have been + past participle"
+                category: "Similar Words",
+                question: "The politician's speech was _______ of his party's core values.",
+                options: ["representative", "presentative", "preservative", "preventative"],
+                correct: 0,
+                explanation: "'Representative' means typical of or serving as an example of something."
             },
             {
-                category: "Passive Voice",
-                original: "They say the new restaurant serves excellent food.",
-                keyWord: "SAID",
-                transform: "The new restaurant _____ _____ _____ _____ excellent food.",
-                answer: "is said to serve",
-                note: "Impersonal passive construction"
+                category: "Similar Words",
+                question: "The new policy will have _______ effects on the economy.",
+                options: ["far-reaching", "far-fetched", "far-sighted", "far-off"],
+                correct: 0,
+                explanation: "'Far-reaching' means having wide-ranging consequences or implications."
             },
             {
-                category: "Passive Voice",
-                original: "The storm damaged many buildings in the area.",
-                keyWord: "WERE",
-                transform: "Many buildings in the area _____ _____ by the storm.",
-                answer: "were damaged",
-                note: "Simple past passive"
+                category: "Similar Words",
+                question: "The artist's work shows a _______ understanding of human nature.",
+                options: ["profound", "profane", "profuse", "proficient"],
+                correct: 0,
+                explanation: "'Profound' means very deep, thorough, or intense in understanding."
             },
             {
-                category: "Passive Voice",
-                original: "People expect the prices to rise significantly next year.",
-                keyWord: "EXPECTED",
-                transform: "The prices _____ _____ _____ _____ significantly next year.",
-                answer: "are expected to rise",
-                note: "Impersonal passive with infinitive"
+                category: "Similar Words",
+                question: "The committee reached a _______ decision after lengthy discussions.",
+                options: ["unanimous", "anonymous", "synonymous", "autonomous"],
+                correct: 0,
+                explanation: "'Unanimous' means complete agreement by all members."
             },
             {
-                category: "Passive Voice",
-                original: "The police have been investigating the case for months.",
-                keyWord: "INVESTIGATED",
-                transform: "The case _____ _____ _____ by the police for months.",
-                answer: "has been being investigated",
-                note: "Present perfect continuous passive"
+                category: "Similar Words",
+                question: "The data provided _______ evidence for the hypothesis.",
+                options: ["compelling", "compiling", "complying", "completing"],
+                correct: 0,
+                explanation: "'Compelling' means forceful, convincing, or strongly persuasive."
             },
             {
-                category: "Passive Voice",
-                original: "They will have completed the project by December.",
-                keyWord: "COMPLETED",
-                transform: "The project _____ _____ _____ _____ by December.",
-                answer: "will have been completed",
-                note: "Future perfect passive"
+                category: "Similar Words",
+                question: "The novel offers a _______ critique of modern society.",
+                options: ["scathing", "soothing", "smoothing", "searching"],
+                correct: 0,
+                explanation: "'Scathing' means severely critical or harsh in assessment."
             },
             {
-                category: "Passive Voice",
-                original: "Everyone knows that she is a talented musician.",
-                keyWord: "KNOWN",
-                transform: "She _____ _____ _____ _____ a talented musician.",
-                answer: "is known to be",
-                note: "Impersonal passive with 'to be'"
-            },
-
-            // Group 2: Reported/Indirect Speech (Questions 11-20)
-            {
-                category: "Reported/Indirect Speech",
-                original: "'Would you like to come to the cinema with me?' Steven asked me.",
-                keyWord: "IF",
-                transform: "Steven asked me _____ _____ _____ _____ to the cinema with him.",
-                answer: "if I would like",
-                note: "Yes/no questions become 'if/whether' + statement word order"
+                category: "Similar Words",
+                question: "His _______ for classical music was evident in his extensive collection.",
+                options: ["penchant", "pendant", "penance", "pension"],
+                correct: 0,
+                explanation: "'Penchant' means a strong inclination or liking for something."
             },
             {
-                category: "Reported/Indirect Speech",
-                original: "'I haven't seen John for weeks,' Mary said.",
-                keyWord: "THAT",
-                transform: "Mary said _____ _____ _____ _____ John for weeks.",
-                answer: "that she hadn't seen",
-                note: "Present perfect → past perfect in reported speech"
+                category: "Similar Words",
+                question: "The medicine had an _______ effect on the patient's condition.",
+                options: ["adverse", "averse", "diverse", "reverse"],
+                correct: 0,
+                explanation: "'Adverse' means harmful or unfavorable. 'Averse' means opposed to something."
             },
             {
-                category: "Reported/Indirect Speech",
-                original: "'Don't forget to lock the door,' she reminded him.",
-                keyWord: "REMINDED",
-                transform: "She _____ _____ _____ _____ the door.",
-                answer: "reminded him to lock",
-                note: "Imperatives become infinitive in reported speech"
+                category: "Similar Words",
+                question: "The CEO's _______ leadership style inspired the entire team.",
+                options: ["exemplary", "exemplify", "exemplifying", "exemplified"],
+                correct: 0,
+                explanation: "'Exemplary' (adjective) means serving as a desirable model; outstanding."
             },
             {
-                category: "Reported/Indirect Speech",
-                original: "'I'm sorry I broke your vase,' he said to her.",
-                keyWord: "APOLOGISED",
-                transform: "He _____ _____ _____ _____ vase.",
-                answer: "apologised for breaking her",
-                note: "Apologies: apologise + for + -ing form"
+                category: "Similar Words",
+                question: "The professor's lecture was both _______ and accessible to students.",
+                options: ["erudite", "erratic", "erotic", "exotic"],
+                correct: 0,
+                explanation: "'Erudite' means having or showing great knowledge or learning."
             },
             {
-                category: "Reported/Indirect Speech",
-                original: "'Why don't you take a break?' she suggested.",
-                keyWord: "SUGGESTED",
-                transform: "She _____ _____ _____ _____ a break.",
-                answer: "suggested that I take",
-                note: "Suggestions can use 'that' + subject + base form"
+                category: "Similar Words",
+                question: "The witness gave a _______ account of the incident.",
+                options: ["lucid", "lurid", "livid", "liquid"],
+                correct: 0,
+                explanation: "'Lucid' means clear and easy to understand; rational and coherent."
             },
             {
-                category: "Reported/Indirect Speech",
-                original: "'I will definitely help you tomorrow,' he promised.",
-                keyWord: "PROMISED",
-                transform: "He _____ _____ _____ _____ the next day.",
-                answer: "promised to help me",
-                note: "Promises become 'promised to' + infinitive"
-            },
-            {
-                category: "Reported/Indirect Speech",
-                original: "'Where did you buy that beautiful dress?' she asked me.",
-                keyWord: "WHERE",
-                transform: "She asked me _____ _____ _____ _____ that beautiful dress.",
-                answer: "where I had bought",
-                note: "Wh-questions keep the question word but use statement order"
-            },
-            {
-                category: "Reported/Indirect Speech",
-                original: "'You must be more careful,' the teacher told the students.",
-                keyWord: "TOLD",
-                transform: "The teacher _____ _____ _____ _____ more careful.",
-                answer: "told the students to",
-                note: "'Must' for obligation becomes 'told to' in reported speech"
-            },
-            {
-                category: "Reported/Indirect Speech",
-                original: "'I wish I had studied harder,' she said.",
-                keyWord: "REGRETTED",
-                transform: "She _____ _____ _____ _____ harder.",
-                answer: "regretted not having studied",
-                note: "'Wish I had' becomes 'regretted not having'"
-            },
-            {
-                category: "Reported/Indirect Speech",
-                original: "'Shall I help you with that?' he offered.",
-                keyWord: "OFFERED",
-                transform: "He _____ _____ _____ _____ with that.",
-                answer: "offered to help me",
-                note: "Offers with 'shall I' become 'offered to'"
+                category: "Similar Words",
+                question: "The company's _______ growth exceeded all expectations.",
+                options: ["exponential", "experiential", "experimental", "expressive"],
+                correct: 0,
+                explanation: "'Exponential' means rapid growth that increases at an accelerating rate."
             },
 
-            // Group 3: Conditionals (Questions 21-30)
+            // Collocations (5% = 1 question)
             {
-                category: "Conditionals",
-                original: "I don't have enough money, so I can't buy a new car.",
-                keyWord: "IF",
-                transform: "_____ _____ _____ _____ money, I could buy a new car.",
-                answer: "If I had enough",
-                note: "Second conditional: If + past simple, would/could + infinitive"
-            },
-            {
-                category: "Conditionals",
-                original: "She didn't study hard, so she failed the exam.",
-                keyWord: "HAD",
-                transform: "If she _____ _____ _____, she wouldn't have failed the exam.",
-                answer: "had studied hard",
-                note: "Third conditional: If + past perfect, would have + past participle"
-            },
-            {
-                category: "Conditionals",
-                original: "Unless you hurry, you'll miss the train.",
-                keyWord: "IF",
-                transform: "_____ _____ _____ _____, you'll miss the train.",
-                answer: "If you don't hurry",
-                note: "'Unless' = 'if not'"
-            },
-            {
-                category: "Conditionals",
-                original: "Provided that the weather is good, we'll have a picnic.",
-                keyWord: "LONG",
-                transform: "We'll have a picnic _____ _____ _____ the weather is good.",
-                answer: "as long as",
-                note: "'Provided that' = 'as long as'"
-            },
-            {
-                category: "Conditionals",
-                original: "I would have called you if I had had your number.",
-                keyWord: "KNOWN",
-                transform: "If I _____ _____ _____ _____, I would have called you.",
-                answer: "had known your number",
-                note: "Third conditional with different verb"
-            },
-            {
-                category: "Conditionals",
-                original: "Should you need any help, please contact me immediately.",
-                keyWord: "IF",
-                transform: "_____ _____ _____ _____ help, please contact me immediately.",
-                answer: "If you need any",
-                note: "Formal conditional: Should + subject = If + subject"
-            },
-            {
-                category: "Conditionals",
-                original: "I might go to the party if I finish my work early.",
-                keyWord: "CASE",
-                transform: "I might go to the party _____ _____ _____ my work early.",
-                answer: "in case I finish",
-                note: "'If' can sometimes be replaced by 'in case'"
-            },
-            {
-                category: "Conditionals",
-                original: "If it weren't for your help, I would be in serious trouble.",
-                keyWord: "BUT",
-                transform: "_____ _____ _____ _____, I would be in serious trouble.",
-                answer: "But for your help",
-                note: "'If it weren't for' = 'But for'"
-            },
-            {
-                category: "Conditionals",
-                original: "Had I known about the meeting, I would have attended.",
-                keyWord: "IF",
-                transform: "_____ _____ _____ _____ about the meeting, I would have attended.",
-                answer: "If I had known",
-                note: "Inverted conditional: Had + subject = If + subject + had"
-            },
-            {
-                category: "Conditionals",
-                original: "She would be happier if she lived closer to her family.",
-                keyWord: "WISH",
-                transform: "She _____ _____ _____ closer to her family.",
-                answer: "wishes she lived",
-                note: "Second conditional can be expressed with 'wish'"
+                category: "Collocations",
+                question: "The project was completed _______ schedule despite several setbacks.",
+                options: ["ahead of", "in front of", "before of", "prior of"],
+                correct: 0,
+                explanation: "'Ahead of schedule' is the correct collocation meaning earlier than planned."
             },
 
-            // Group 4: Gerunds & Infinitives (Questions 31-40)
+            // Linking Words (10% = 3 questions)
             {
-                category: "Gerunds & Infinitives",
-                original: "Would you like to go shopping this afternoon?",
-                keyWord: "FEEL",
-                transform: "Do you _____ _____ _____ _____ this afternoon?",
-                answer: "feel like going shopping",
-                note: "'Feel like' + gerund = 'would like to' + infinitive"
+                category: "Linking Words",
+                question: "_______ the challenging economic climate, the company managed to increase profits.",
+                options: ["Notwithstanding", "Providing", "Supposing", "Concerning"],
+                correct: 0,
+                explanation: "'Notwithstanding' means despite or in spite of, showing contrast."
             },
             {
-                category: "Gerunds & Infinitives",
-                original: "I remember that I locked the door before leaving.",
-                keyWord: "REMEMBER",
-                transform: "I _____ _____ _____ _____ before leaving.",
-                answer: "remember locking the door",
-                note: "'Remember doing' = recall a past action"
+                category: "Linking Words",
+                question: "The research was thorough; _______, the conclusions were questionable.",
+                options: ["nevertheless", "therefore", "furthermore", "moreover"],
+                correct: 0,
+                explanation: "'Nevertheless' introduces a contrasting statement despite what was said before."
             },
             {
-                category: "Gerunds & Infinitives",
-                original: "He denied that he had stolen the money.",
-                keyWord: "DENIED",
-                transform: "He _____ _____ _____ _____.",
-                answer: "denied having stolen the",
-                note: "'Deny' + gerund (perfect gerund for past actions)"
-            },
-            {
-                category: "Gerunds & Infinitives",
-                original: "It's no use complaining about the weather.",
-                keyWord: "POINT",
-                transform: "There's _____ _____ _____ about the weather.",
-                answer: "no point in complaining",
-                note: "'It's no use' = 'There's no point in' + gerund"
-            },
-            {
-                category: "Gerunds & Infinitives",
-                original: "I can't stand waiting in long queues.",
-                keyWord: "BEAR",
-                transform: "I _____ _____ _____ in long queues.",
-                answer: "can't bear waiting",
-                note: "'Can't stand' = 'can't bear' + gerund"
-            },
-            {
-                category: "Gerunds & Infinitives",
-                original: "She avoided talking about the accident.",
-                keyWord: "AVOIDED",
-                transform: "She _____ _____ _____ about the accident.",
-                answer: "avoided talking",
-                note: "'Avoid' + gerund"
-            },
-            {
-                category: "Gerunds & Infinitives",
-                original: "I regret selling my old car.",
-                keyWord: "WISH",
-                transform: "I _____ _____ _____ _____ my old car.",
-                answer: "wish I hadn't sold",
-                note: "'Regret doing' = 'wish I hadn't done'"
-            },
-            {
-                category: "Gerunds & Infinitives",
-                original: "Don't forget to post the letter.",
-                keyWord: "REMEMBER",
-                transform: "_____ _____ _____ _____ letter.",
-                answer: "Remember to post the",
-                note: "'Don't forget to' = 'Remember to'"
-            },
-            {
-                category: "Gerunds & Infinitives",
-                original: "I'm looking forward to meeting you next week.",
-                keyWord: "MEET",
-                transform: "I can't _____ _____ _____ _____ next week.",
-                answer: "wait to meet you",
-                note: "'Look forward to' (+ gerund) = 'can't wait to' (+ infinitive)"
-            },
-            {
-                category: "Gerunds & Infinitives",
-                original: "She suggested going to the theatre.",
-                keyWord: "ABOUT",
-                transform: "She made a suggestion _____ _____ _____ the theatre.",
-                answer: "about going to",
-                note: "'Suggest' + gerund = 'make a suggestion about' + gerund"
+                category: "Linking Words",
+                question: "_______ you follow the instructions carefully, you won't encounter any problems.",
+                options: ["Provided that", "In case", "Unless", "Despite"],
+                correct: 0,
+                explanation: "'Provided that' introduces a condition that must be met."
             },
 
-            // Group 5: Causative Structures (Questions 41-50)
+            // Phrasal Verbs (10% = 3 questions)
             {
-                category: "Causative Structures",
-                original: "The mechanic repaired my car yesterday.",
-                keyWord: "HAD",
-                transform: "I _____ _____ _____ _____ yesterday.",
-                answer: "had my car repaired",
-                note: "Causative have: have + object + past participle"
+                category: "Phrasal Verbs",
+                question: "The meeting was _______ until next week due to scheduling conflicts.",
+                options: ["put off", "put on", "put up", "put out"],
+                correct: 0,
+                explanation: "'Put off' means to postpone or delay something."
             },
             {
-                category: "Causative Structures",
-                original: "Someone is cutting the grass in our garden.",
-                keyWord: "HAVING",
-                transform: "We're _____ _____ _____ _____ in our garden.",
-                answer: "having the grass cut",
-                note: "Present continuous causative"
+                category: "Phrasal Verbs",
+                question: "She finally _______ smoking after years of trying.",
+                options: ["gave up", "gave in", "gave out", "gave away"],
+                correct: 0,
+                explanation: "'Gave up' means to stop doing something, especially a habit."
             },
             {
-                category: "Causative Structures",
-                original: "The hairdresser will style her hair for the wedding.",
-                keyWord: "GET",
-                transform: "She will _____ _____ _____ _____ for the wedding.",
-                answer: "get her hair styled",
-                note: "Causative get: get + object + past participle"
-            },
-            {
-                category: "Causative Structures",
-                original: "A professional photographer took their wedding photos.",
-                keyWord: "HAD",
-                transform: "They _____ _____ _____ _____ by a professional photographer.",
-                answer: "had their wedding photos",
-                note: "Causative construction with agent"
-            },
-            {
-                category: "Causative Structures",
-                original: "Someone should check your eyes regularly.",
-                keyWord: "HAVE",
-                transform: "You should _____ _____ _____ _____ regularly.",
-                answer: "have your eyes checked",
-                note: "Modal + causative have"
-            },
-            {
-                category: "Causative Structures",
-                original: "The dentist is going to clean my teeth next week.",
-                keyWord: "CLEANED",
-                transform: "I'm going to _____ _____ _____ _____ next week.",
-                answer: "have my teeth cleaned",
-                note: "'Going to' + causative have"
-            },
-            {
-                category: "Causative Structures",
-                original: "Someone stole his wallet while he was shopping.",
-                keyWord: "HAD",
-                transform: "He _____ _____ _____ _____ while he was shopping.",
-                answer: "had his wallet stolen",
-                note: "Causative for unfortunate events"
-            },
-            {
-                category: "Causative Structures",
-                original: "The decorator is painting our house this month.",
-                keyWord: "GETTING",
-                transform: "We're _____ _____ _____ _____ this month.",
-                answer: "getting our house painted",
-                note: "Present continuous with causative get"
-            },
-            {
-                category: "Causative Structures",
-                original: "They made me wait for two hours.",
-                keyWord: "WAS",
-                transform: "I _____ _____ _____ _____ for two hours.",
-                answer: "was made to wait",
-                note: "Passive causative: was made to + infinitive"
-            },
-            {
-                category: "Causative Structures",
-                original: "The optician tested her eyesight last month.",
-                keyWord: "TESTED",
-                transform: "She _____ _____ _____ _____ last month.",
-                answer: "had her eyesight tested",
-                note: "Past causative construction"
+                category: "Phrasal Verbs",
+                question: "The story he told didn't _______ with the evidence we found.",
+                options: ["add up", "add on", "add to", "add in"],
+                correct: 0,
+                explanation: "'Add up' means to make sense or be consistent with other facts."
             },
 
-            // Group 6: Perfect Tenses (Questions 51-60)
+            // Similar Expressions (5% = 1 question)
             {
-                category: "Perfect Tenses",
-                original: "My car broke down for the first time last Friday.",
-                keyWord: "NEVER",
-                transform: "Until last Friday, my car _____ _____ _____ _____.",
-                answer: "had never broken down",
-                note: "Past perfect with time reference"
-            },
-            {
-                category: "Perfect Tenses",
-                original: "I started learning French three years ago and I'm still learning it.",
-                keyWord: "BEEN",
-                transform: "I _____ _____ _____ _____ for three years.",
-                answer: "have been learning French",
-                note: "Present perfect continuous for ongoing action"
-            },
-            {
-                category: "Perfect Tenses",
-                original: "They will finish the project before the deadline.",
-                keyWord: "HAVE",
-                transform: "By the deadline, they _____ _____ _____ the project.",
-                answer: "will have finished",
-                note: "Future perfect tense"
-            },
-            {
-                category: "Perfect Tenses",
-                original: "She had already left when I arrived at the station.",
-                keyWord: "TIME",
-                transform: "By the _____ _____ _____ at the station, she had already left.",
-                answer: "time I arrived",
-                note: "'By the time' + past perfect"
-            },
-            {
-                category: "Perfect Tenses",
-                original: "This is my first visit to Japan.",
-                keyWord: "BEEN",
-                transform: "I _____ _____ _____ _____ Japan before.",
-                answer: "have never been to",
-                note: "Present perfect for life experience"
-            },
-            {
-                category: "Perfect Tenses",
-                original: "She was tired because she had been working all day.",
-                keyWord: "BEEN",
-                transform: "Having _____ _____ _____ _____, she was tired.",
-                answer: "been working all day",
-                note: "Perfect participle clause"
-            },
-            {
-                category: "Perfect Tenses",
-                original: "I last saw him five years ago.",
-                keyWord: "SEEN",
-                transform: "I _____ _____ _____ _____ five years.",
-                answer: "haven't seen him for",
-                note: "Present perfect with time duration"
-            },
-            {
-                category: "Perfect Tenses",
-                original: "When I graduate, I will have been studying for six years.",
-                keyWord: "STUDYING",
-                transform: "By the time I graduate, I _____ _____ _____ for six years.",
-                answer: "will have been",
-                note: "Future perfect continuous"
-            },
-            {
-                category: "Perfect Tenses",
-                original: "The meeting ended before I could get there.",
-                keyWord: "ALREADY",
-                transform: "The meeting _____ _____ _____ by the time I got there.",
-                answer: "had already ended",
-                note: "Past perfect with 'already'"
-            },
-            {
-                category: "Perfect Tenses",
-                original: "It's three months since I last went to the cinema.",
-                keyWord: "BEEN",
-                transform: "I _____ _____ _____ the cinema for three months.",
-                answer: "haven't been to",
-                note: "'It's ... since' = present perfect negative"
+                category: "Similar Expressions",
+                question: "When it comes to public speaking, practice makes _______.",
+                options: ["perfect", "sense", "progress", "difference"],
+                correct: 0,
+                explanation: "'Practice makes perfect' is a common idiom meaning that regular practice leads to expertise."
             },
 
-            // Group 7: Relative Clauses (Questions 61-70)
+            // Gerund & Infinitive (10% = 2 questions)
             {
-                category: "Relative Clauses",
-                original: "The people were very friendly. We stayed with them during our holiday.",
-                keyWord: "WHOM",
-                transform: "The people with _____ _____ _____ during our holiday were very friendly.",
-                answer: "whom we stayed",
-                note: "Preposition + relative pronoun 'whom'"
+                category: "Gerund & Infinitive",
+                question: "I regret _______ you that your application has been unsuccessful.",
+                options: ["to inform", "informing", "inform", "informed"],
+                correct: 0,
+                explanation: "'Regret to do' is used for present actions (giving bad news). 'Regret doing' is for past actions."
             },
             {
-                category: "Relative Clauses",
-                original: "That's the man. His son won the competition.",
-                keyWord: "WHOSE",
-                transform: "That's the man _____ _____ _____ _____ competition.",
-                answer: "whose son won the",
-                note: "Possessive relative clause"
-            },
-            {
-                category: "Relative Clauses",
-                original: "The film was boring. We watched it last night.",
-                keyWord: "THAT",
-                transform: "The film _____ _____ _____ _____ night was boring.",
-                answer: "that we watched last",
-                note: "Defining relative clause with 'that'"
-            },
-            {
-                category: "Relative Clauses",
-                original: "This is the hotel. We spent our honeymoon at this hotel.",
-                keyWord: "WHERE",
-                transform: "This is the hotel _____ _____ _____ _____ honeymoon.",
-                answer: "where we spent our",
-                note: "Relative adverb replacing prepositional phrase"
-            },
-
-            // Group 8: Negation (Questions 71-80)
-            {
-                category: "Negation",
-                original: "I had just sat down when the phone rang.",
-                keyWord: "SOONER",
-                transform: "No _____ _____ _____ _____ down than the phone rang.",
-                answer: "sooner had I sat",
-                note: "No sooner... than + inversion"
-            },
-            {
-                category: "Negation",
-                original: "I have never seen such a beautiful sunset.",
-                keyWord: "NEVER",
-                transform: "_____ _____ _____ _____ such a beautiful sunset.",
-                answer: "Never have I seen",
-                note: "Negative adverb + inversion"
-            },
-            {
-                category: "Negation",
-                original: "She rarely goes to the cinema these days.",
-                keyWord: "RARELY",
-                transform: "_____ _____ _____ _____ to the cinema these days.",
-                answer: "Rarely does she go",
-                note: "Inversion with frequency adverbs"
-            },
-            {
-                category: "Negation",
-                original: "I won't help you under any circumstances.",
-                keyWord: "CIRCUMSTANCES",
-                transform: "Under no _____ _____ _____ _____ you.",
-                answer: "circumstances will I help",
-                note: "Under no circumstances + inversion"
-            },
-            {
-                category: "Negation",
-                original: "She didn't realize how serious the situation was.",
-                keyWord: "DID",
-                transform: "Little _____ _____ _____ how serious the situation was.",
-                answer: "did she realize",
-                note: "'Little' for emphasis + inversion"
-            },
-            {
-                category: "Negation",
-                original: "He didn't say a single word during the meeting.",
-                keyWord: "WORD",
-                transform: "Not a _____ _____ _____ _____ during the meeting.",
-                answer: "word did he say",
-                note: "Not a... + inversion"
-            },
-            {
-                category: "Negation",
-                original: "I haven't been to Paris and I haven't been to Rome either.",
-                keyWord: "NEITHER",
-                transform: "I have been to _____ _____ _____ _____.",
-                answer: "neither Paris nor Rome",
-                note: "Neither... nor construction"
-            },
-            {
-                category: "Negation",
-                original: "She not only sings but also dances professionally.",
-                keyWord: "ONLY",
-                transform: "Not _____ _____ _____ _____ but she also dances professionally.",
-                answer: "only does she sing",
-                note: "Not only... but also + inversion"
-            },
-            {
-                category: "Negation",
-                original: "I have never met anyone as talented as her.",
-                keyWord: "HAVE",
-                transform: "Never _____ _____ _____ anyone as talented as her.",
-                answer: "have I met",
-                note: "Never + present perfect + inversion"
-            },
-            {
-                category: "Negation",
-                original: "They didn't invite me to the party and they didn't tell me about it either.",
-                keyWord: "NOR",
-                transform: "They didn't invite me to the party, _____ _____ _____ _____ about it.",
-                answer: "nor did they tell",
-                note: "Negative coordination with 'nor'"
-            },
-
-            // Group 9: Modal Verbs (Questions 81-90)
-            {
-                category: "Modal Verbs",
-                original: "You should improve your handwriting.",
-                keyWord: "OUGHT",
-                transform: "You _____ _____ _____ your handwriting.",
-                answer: "ought to improve",
-                note: "'Should' = 'ought to'"
-            },
-            {
-                category: "Modal Verbs",
-                original: "It's possible that she missed the train.",
-                keyWord: "MIGHT",
-                transform: "She _____ _____ _____ the train.",
-                answer: "might have missed",
-                note: "Possibility in the past: might have + past participle"
-            },
-            {
-                category: "Modal Verbs",
-                original: "I'm sure he didn't steal the money.",
-                keyWord: "HAVE",
-                transform: "He _____ _____ _____ the money.",
-                answer: "can't have stolen",
-                note: "Impossibility in the past: can't have + past participle"
-            },
-            {
-                category: "Modal Verbs",
-                original: "It wasn't necessary for you to bring a gift.",
-                keyWord: "HAVE",
-                transform: "You _____ _____ _____ a gift.",
-                answer: "needn't have brought",
-                note: "Unnecessary past action: needn't have + past participle"
-            },
-            {
-                category: "Modal Verbs",
-                original: "I advise you to see a doctor immediately.",
-                keyWord: "BETTER",
-                transform: "You _____ _____ _____ a doctor immediately.",
-                answer: "had better see",
-                note: "'Had better' for strong advice"
-            },
-            {
-                category: "Modal Verbs",
-                original: "Perhaps they went home early.",
-                keyWord: "MAY",
-                transform: "They _____ _____ _____ home early.",
-                answer: "may have gone",
-                note: "Possibility in the past: may have + past participle"
-            },
-            {
-                category: "Modal Verbs",
-                original: "I'm certain she was at the meeting yesterday.",
-                keyWord: "MUST",
-                transform: "She _____ _____ _____ at the meeting yesterday.",
-                answer: "must have been",
-                note: "Certainty in the past: must have + past participle"
-            },
-            {
-                category: "Modal Verbs",
-                original: "It's forbidden to smoke in this building.",
-                keyWord: "MUST",
-                transform: "You _____ _____ _____ in this building.",
-                answer: "must not smoke",
-                note: "Prohibition: must not"
-            },
-            {
-                category: "Modal Verbs",
-                original: "Would you mind opening the window?",
-                keyWord: "COULD",
-                transform: "_____ _____ _____ _____ the window?",
-                answer: "Could you please open",
-                note: "Polite requests: Could you...?"
-            },
-            {
-                category: "Modal Verbs",
-                original: "I managed to finish the report on time.",
-                keyWord: "ABLE",
-                transform: "I _____ _____ _____ _____ the report on time.",
-                answer: "was able to finish",
-                note: "'Managed to' = 'was able to' (past ability/achievement)"
+                category: "Gerund & Infinitive",
+                question: "The manager suggested _______ the proposal before the deadline.",
+                options: ["revising", "to revise", "revise", "revised"],
+                correct: 0,
+                explanation: "'Suggest' is followed by a gerund (verb + -ing), not an infinitive."
             }
         ];
 
-        let currentQuestionIndex = 0;
-        let currentCategoryIndex = 0;
-        
-        const categoriesData = [
-            { name: "Passive Voice", start: 0, end: 9 },
-            { name: "Reported/Indirect Speech", start: 10, end: 19 },
-            { name: "Conditionals", start: 20, end: 29 },
-            { name: "Gerunds & Infinitives", start: 30, end: 39 },
-            { name: "Causative Structures", start: 40, end: 49 },
-            { name: "Perfect Tenses", start: 50, end: 59 },
-            { name: "Relative Clauses", start: 60, end: 69 },
-            { name: "Negation", start: 70, end: 79 },
-            { name: "Modal Verbs", start: 80, end: 89 }
-        ];
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        let selectedOption = -1;
 
-        function updateProgress() {
-            const progressFill = document.getElementById('progressFill');
-            const currentQuestionSpan = document.getElementById('currentQuestion');
-            const percentage = ((currentQuestionIndex + 1) / questions.length) * 100;
-            progressFill.style.width = percentage + '%';
-            currentQuestionSpan.textContent = currentQuestionIndex + 1;
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            const questionNumber = document.getElementById('questionNumber');
+            const categoryTag = document.getElementById('categoryTag');
+            const questionText = document.getElementById('questionText');
+            const optionsGrid = document.getElementById('optionsGrid');
+            const explanation = document.getElementById('explanation');
+            const progressBar = document.getElementById('progressBar');
+
+            questionNumber.textContent = `Question ${currentQuestion + 1} of 25`;
+            categoryTag.textContent = q.category;
+            questionText.textContent = q.question;
+            explanation.classList.remove('show');
+            
+            // Update progress bar
+            progressBar.style.width = `${((currentQuestion + 1) / 25) * 100}%`;
+
+            // Clear options
+            optionsGrid.innerHTML = '';
+            
+            // Add options
+            q.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.innerHTML = `
+                    <span class="option-letter">${String.fromCharCode(65 + index)}</span>
+                    <span class="option-text">${option}</span>
+                `;
+                optionDiv.onclick = () => selectOption(index);
+                optionsGrid.appendChild(optionDiv);
+            });
+
+            updateScore();
+            resetButtons();
         }
 
-        function showQuestion() {
-            const container = document.getElementById('questionsContainer');
-            const question = questions[currentQuestionIndex];
-            
-            // Check if we need to show a new category title
-            let categoryTitle = '';
-            const currentCategory = categoriesData.find(cat => 
-                currentQuestionIndex >= cat.start && currentQuestionIndex <= cat.end
-            );
-            
-            if (currentCategory && currentQuestionIndex === currentCategory.start) {
-                categoryTitle = `<div class="category-title">${currentCategory.name}</div>`;
-            }
-            
-            container.innerHTML = `
-                ${categoryTitle}
-                <div class="question-container">
-                    <div class="question-number">Question ${currentQuestionIndex + 1} of 90</div>
-                    
-                    <div class="original-sentence">
-                        <strong>Original:</strong> ${question.original}
-                    </div>
-                    
-                    <div class="key-word">
-                        Key word: ${question.keyWord}
-                    </div>
-                    
-                    <div class="transform-sentence">
-                        ${question.transform.replace(/_{3,}/g, '<span class="blank-space">___</span>')}
-                    </div>
-                    
-                    <div class="buttons">
-                        <button class="repeat-btn" onclick="repeatQuestion()">🔄 Repeat</button>
-                        <button class="back-btn" onclick="previousQuestion()" ${currentQuestionIndex === 0 ? 'disabled' : ''}>⬅️ Back</button>
-                        <button class="next-btn" onclick="nextQuestion()" ${currentQuestionIndex === questions.length - 1 ? 'disabled' : ''}>Next ➡️</button>
-                        <button class="answer-btn" onclick="showAnswer()">💡 Answer</button>
-                    </div>
-                    
-                    <div class="answer" id="answer-${currentQuestionIndex}">
-                        <strong>Answer:</strong> ${question.answer}<br>
-                        <div class="grammar-note"><strong>Grammar Note:</strong> ${question.note}</div>
-                    </div>
-                </div>
-            `;
-            
-            updateProgress();
-        }
+        function selectOption(index) {
+            if (answered) return;
 
-        function repeatQuestion() {
-            showQuestion();
-        }
-
-        function previousQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                showQuestion();
-            }
-        }
-
-        function nextQuestion() {
-            if (currentQuestionIndex < questions.length - 1) {
-                currentQuestionIndex++;
-                showQuestion();
-            }
+            selectedOption = index;
+            const options = document.querySelectorAll('.option');
+            options.forEach((opt, i) => {
+                opt.classList.remove('selected');
+                if (i === index) {
+                    opt.classList.add('selected');
+                }
+            });
         }
 
         function showAnswer() {
-            const answerDiv = document.getElementById(`answer-${currentQuestionIndex}`);
-            answerDiv.classList.add('show');
+            if (selectedOption === -1) {
+                alert('Please select an option first!');
+                return;
+            }
+
+            answered = true;
+            const q = questions[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            
+            options.forEach((opt, i) => {
+                opt.style.pointerEvents = 'none';
+                if (i === q.correct) {
+                    opt.classList.add('correct');
+                } else if (i === selectedOption && i !== q.correct) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            if (selectedOption === q.correct) {
+                score++;
+            }
+
+            updateScore();
+            document.getElementById('answerBtn').disabled = true;
         }
 
-        // Initialize the app
-        showQuestion();
+        function showExplanation() {
+            const explanation = document.getElementById('explanation');
+            const q = questions[currentQuestion];
+            explanation.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+            explanation.classList.add('show');
+        }
+
+        function nextQuestion() {
+            if (!answered) {
+                alert('Please answer the question first!');
+                return;
+            }
+
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                answered = false;
+                selectedOption = -1;
+                loadQuestion();
+            } else {
+                showFinalScore();
+            }
+        }
+
+        function resetButtons() {
+            document.getElementById('answerBtn').disabled = false;
+            document.getElementById('explanationBtn').disabled = false;
+        }
+
+        function updateScore() {
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const percentage = currentQuestion === 0 && score === 0 ? 0 : Math.round((score / (currentQuestion + (answered ? 1 : 0))) * 100);
+            scoreDisplay.textContent = `Score: ${score}/${answered ? currentQuestion + 1 : currentQuestion} (${percentage}%)`;
+        }
+
+        function showFinalScore() {
+            const quizSection = document.getElementById('quizSection');
+            const finalScore = document.getElementById('finalScore');
+            const finalScoreCircle = document.getElementById('finalScoreCircle');
+            const finalMessage = document.getElementById('finalMessage');
+
+            const percentage = Math.round((score / 25) * 100);
+            
+            quizSection.style.display = 'none';
+            finalScore.style.display = 'block';
+            
+            finalScoreCircle.textContent = `${percentage}%`;
+            
+            let message = '';
+            if (percentage >= 90) {
+                message = '🌟 Outstanding! You\'re definitely C1 level!';
+                finalScoreCircle.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
+            } else if (percentage >= 80) {
+                message = '🎯 Excellent work! Strong C1 performance!';
+                finalScoreCircle.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
+            } else if (percentage >= 70) {
+                message = '👍 Good job! Keep practicing for C1 mastery!';
+                finalScoreCircle.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+            } else {
+                message = '📚 Keep studying! You\'ll get there soon!';
+                finalScoreCircle.style.background = 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)';
+            }
+            
+            finalMessage.textContent = message;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            selectedOption = -1;
+            
+            document.getElementById('quizSection').style.display = 'block';
+            document.getElementById('finalScore').style.display = 'none';
+            
+            loadQuestion();
+        }
+
+        // Initialize quiz
+        loadQuestion();
     </script>
 </body>
 </html>
-                original: "The woman spoke to me. Her car had broken down.",
-                keyWord: "WHOSE",
-                transform: "The woman _____ _____ _____ _____ down spoke to me.",
-                answer: "whose car had broken",
-                note: "Possessive relative pronoun 'whose'"
-            },
-            {
-                category: "Relative Clauses",
-                original: "The book was very interesting. I read it last week.",
-                keyWord: "WHICH",
-                transform: "The book _____ _____ _____ _____ week was very interesting.",
-                answer: "which I read last",
-                note: "Defining relative clause with 'which'"
-            },
-            {
-                category: "Relative Clauses",
-                original: "This is the place. The accident happened here.",
-                keyWord: "WHERE",
-                transform: "This is the place _____ _____ _____ _____.",
-                answer: "where the accident happened",
-                note: "Relative adverb 'where'"
-            },
-            {
-                category: "Relative Clauses",
-                original: "The reason she left early is unknown.",
-                keyWord: "WHY",
-                transform: "No one knows the reason _____ _____ _____ _____.",
-                answer: "why she left early",
-                note: "Relative adverb 'why'"
-            },
-            {
-                category: "Relative Clauses",
-                original: "All the students passed the exam. They had studied hard.",
-                keyWord: "WHO",
-                transform: "All the students _____ _____ _____ _____ passed the exam.",
-                answer: "who had studied hard",
-                note: "Defining relative clause with 'who'"
-            },
-            {
-                category: "Relative Clauses",
-                original: "I'll never forget the day. I met my wife on that day.",
-                keyWord: "WHEN",
-                transform: "I'll never forget the day _____ _____ _____ _____.",
-                answer: "when I met my",
-                note: "Relative adverb 'when'"
-            },
-            {
-                category: "Relative Clauses",
